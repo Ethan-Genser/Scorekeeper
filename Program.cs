@@ -19,6 +19,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<ApplicationUserService>();
 builder.Services.AddScoped<ScoreboardService>();
+builder.Services.AddScoped<TeamService>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -85,11 +86,11 @@ using (var scope = scopeFactory.CreateScope())
         var res = roleManager.CreateAsync(role).Result;
     }
 
+    // Create admin user
     var admin = userManager.FindByEmailAsync("ethanp1033@gmail.com").Result;
     if (admin != null)
     {
         userManager.AddToRoleAsync(admin, "Admin").Wait();
-        userManager.AddToRoleAsync(admin, "User").Wait();
     }
 
     var roles = roleManager.Roles.ToList();

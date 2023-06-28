@@ -63,6 +63,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Color</th>
+                    <th>Teams</th>
                     <th>Owner</th>
                     <th>Users</th>
                     <th></th>
@@ -76,6 +77,12 @@
                         <td>@scoreboard.Id</td>
                         <td>@scoreboard.Name</td>
                         <td>@scoreboard.Color</td>
+                        <td>
+                            @foreach (var team in scoreboard.Teams)
+                            {
+                                <p>@team.Name</p>
+                            }
+                        </td>
                         <td>@scoreboard.OwnerId</td>
                         <td>
                             @foreach (var user in scoreboard.Users)
@@ -109,6 +116,12 @@
                                 <input asp-for="NewColor" value="@scoreboard.Color" class="form-control" />
                                 <span asp-validation-for="NewColor" class="text-danger"></span>
                             </td>
+                            <td>
+                                @foreach (var team in scoreboard.Teams)
+                                {
+                                    <p>@team.Name</p>
+                                }
+                            </td>
                             <!-- OWNER -->
                             <td>
                                 <input asp-for="NewOwnerId" value="@scoreboard.OwnerId" class="form-control" />
@@ -133,6 +146,6 @@
     }
     else
     {
-        <p><i>No Users Found</i></p>
+        <p><i>No Scoreboards Found</i></p>
     }
 </div>

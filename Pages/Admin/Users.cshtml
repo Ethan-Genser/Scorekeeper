@@ -125,8 +125,14 @@
                             </td>
                             <!-- ROLES -->
                             <td>
-                                <input asp-for="NewRoles" value="@Model.UserRoles[user.Id]" class="form-control" />
+                                <input asp-for="NewRoles" value="@string.Join(", ", Model.UserRoles[user.Id])" class="form-control" />
                                 <span asp-validation-for="NewRoles" class="text-danger"></span>
+                            </td>
+                            <td>
+                                @foreach (var scoreboard in user.Scoreboards)
+                                {
+                                    <p>@scoreboard.Name</p>
+                                }
                             </td>
                             <!-- EMAIL CONFIRMED -->
                             <td class="text-center">

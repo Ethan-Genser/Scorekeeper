@@ -8,6 +8,7 @@ namespace Scorekeeper.Data
     {
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Scoreboard> Scoreboards { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

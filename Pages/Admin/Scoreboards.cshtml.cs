@@ -64,6 +64,10 @@ namespace Scorekeeper.Pages.Admin
                 {
                     scoreboard.Users.Add(user);
                 }
+                else // If any of the provided users are not found cancel the whole operation
+                {
+                    return NotFound();
+                }
             }
 
             _scoreboardService.AddScoreboard(scoreboard);

@@ -25,6 +25,7 @@ namespace Scorekeeper.Services
         {
             return _context.Scoreboards
                 .Include(sb => sb.Users)
+                .Include(sb => sb.Teams)
                 .ToList();
         }
 
@@ -33,6 +34,7 @@ namespace Scorekeeper.Services
             return _context.Scoreboards
                 .Where(x => x.Id == id)
                 .Include(sb => sb.Users)
+                .Include(sb => sb.Teams)
                 .FirstOrDefault();
         }
 
