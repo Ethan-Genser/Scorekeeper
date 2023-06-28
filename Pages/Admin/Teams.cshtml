@@ -54,7 +54,7 @@
         </form>
     </div>
 
-    <!-- USER TABLE -->
+    <!-- TEAM TABLE -->
     @if (Model.Teams.Count > 0)
     {
         <table class="admin-table">
@@ -88,35 +88,34 @@
                         </td>
                     </tr>
 
-                    //<! -- UPDATE SCOREBOARD FORM -->
+                    //<! -- UPDATE TEAM FORM -->
                     <tr class="admin-update-row" style="display:none;">
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <!-- ID -->
-                        <td>@team.Id</td>
-                        <!-- NAME -->
-                        <td>
-                            <input asp-for="NewName" value="@team.Name" class="form-control" />
-                            <span asp-validation-for="NewName" class="text-danger"></span>
-                        </td>
-                        <!-- COLOR -->
-                        <td>
-                            <input asp-for="NewColor" value="@team.Color" class="form-control" />
-                            <span asp-validation-for="NewColor" class="text-danger"></span>
-                        </td>
-                        <!-- SCORE -->
-                        <td>
-                            <input asp-for="NewScore" value="@team.Score" class="form-control" />
-                            <span asp-validation-for="NewScore" class="text-danger"></span>
-                        </td>
-                        <!-- SCOREBOARD -->
-                        <td>
-                            <input asp-for="NewScoreboardId" value="@team.Scoreboard.Id" class="form-control" />
-                            <span asp-validation-for="NewScoreboardId" class="text-danger"></span>
-                        </td>
-                        <td>
-                            sp-page-handler="Update" asp-route-id="@team.Id" class="btn btn-info update-submit-btn" />
-                        </td>
+                            <td>@team.Id</td>
+                            <!-- NAME -->
+                            <td>
+                                <input asp-for="NewName" value="@team.Name" class="form-control" />
+                                <span asp-validation-for="NewName" class="text-danger"></span>
+                            </td>
+                            <!-- COLOR -->
+                            <td>
+                                <input asp-for="NewColor" value="@team.Color" class="form-control" />
+                                <span asp-validation-for="NewColor" class="text-danger"></span>
+                            </td>
+                            <!-- SCORE -->
+                            <td>
+                                <input asp-for="NewScore" value="@team.Score" class="form-control" />
+                                <span asp-validation-for="NewScore" class="text-danger"></span>
+                            </td>
+                            <!-- SCOREBOARD -->
+                            <td>
+                                <p>@team.Scoreboard.Name</p>
+                            </td>
+                            <td>
+                                <input type="submit" value="Submit" asp-page-handler="Update" asp-route-id="@team.Id" class="btn btn-info update-submit-btn" />
+                            </td>
                         </form>
                         <td>
                             <button class=" btn btn-outline-danger update-cancel-btn">Cancel</button>

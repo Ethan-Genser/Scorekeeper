@@ -66,5 +66,35 @@ namespace Scorekeeper.Pages.Admin
 
             return RedirectToAction("Get");
         }   
+
+        public IActionResult OnPostDelete(string id)
+        {
+            _teamService.DeleteTeam(id);
+            return RedirectToAction("Get");
+        }
+
+        public IActionResult OnPostUpdate(string id)
+        {
+            Team? team = _teamService.GetTeam(id);
+            if (team != null)
+            {
+                if (NewName != null)
+                {
+                    team.Name = NewName;
+                }
+                if (NewColor != null)
+                {
+                    team.Color = NewColor;
+                }
+                if (NewScore != null)
+                {
+                    team.Score = (float)NewScore;
+                }
+
+                _teamService.UpdateTeam(team);
+            }
+
+            return RedirectToAction("Get");
+        }   
     }
 }
