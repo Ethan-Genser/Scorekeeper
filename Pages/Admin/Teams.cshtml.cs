@@ -76,23 +76,26 @@ namespace Scorekeeper.Pages.Admin
         public IActionResult OnPostUpdate(string id)
         {
             Team? team = _teamService.GetTeam(id);
-            if (team != null)
-            {
-                if (NewName != null)
-                {
-                    team.Name = NewName;
-                }
-                if (NewColor != null)
-                {
-                    team.Color = NewColor;
-                }
-                if (NewScore != null)
-                {
-                    team.Score = (float)NewScore;
-                }
 
-                _teamService.UpdateTeam(team);
+            if (team == null)
+            {
+                return NotFound();
             }
+
+            if (NewName != null)
+            {
+                team.Name = NewName;
+            }
+            if (NewColor != null)
+            {
+                team.Color = NewColor;
+            }
+            if (NewScore != null)
+            {
+                team.Score = (float)NewScore;
+            }
+
+            _teamService.UpdateTeam(team);
 
             return RedirectToAction("Get");
         }   

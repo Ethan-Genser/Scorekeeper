@@ -74,6 +74,47 @@ namespace Scorekeeper.Pages.Admin
             return RedirectToAction("Get");
         }
 
+        public IActionResult OnPostUpdate(string id)
+        {
+            Scoreboard? scoreboard = _scoreboardService.GetScoreboard(id);
+            if (scoreboard == null)
+            {
+                return NotFound();
+            }
+
+            if (NewName != null)
+            {
+                scoreboard.Name = NewName;
+            }
+            if (NewColor != null)
+            {
+                scoreboard.Color = NewColor;
+            }
+            if (NewOwnerId != null)
+            {
+                scoreboard.OwnerId = NewOwnerId;
+            }
+
+
+            scoreboard.Users = new List<ApplicationUser>();
+            List<string> userIds = NewUsers?.Replace(" ", "").Split(",").ToList() ?? new List<string>();
+            foreach (var userId in userIds)
+            {
+                ApplicationUser? user = _userService.GetUser(userId);
+                if (user != null)
+                {
+                    scoreboard.Users.Add(user);
+                }
+                else // If any of the provided users are not found cancel the whole operation
+                {
+                    return NotFound();
+                }
+            }
+
+            _scoreboardService.UpdateScoreboard(scoreboard);
+            return RedirectToAction("Get");
+        }
+
         public IActionResult OnPostDelete(string id)
         {
             _scoreboardService.DeleteScoreboard(id);
