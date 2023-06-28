@@ -1,0 +1,63 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.ul-dir {
+    display: inline-block;
+    text-align: left;
+    list-style-type: none;
+}
+
+.admin-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.admin-table th {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-update-row {
+    border: 2px dashed #0094ff;
+}
+
+.admin-create-btn-container {
+    width: 100%;
+    text-align: right;
+    padding: 10px;
+}
+
+.form-container {
+    display: none;
+    position: fixed;
+    top: 12.5%;
+    right: 25%;
+    border: 3px solid #ddd;
+    z-index: 9;
+    width: 50%;
+    box-shadow: 0 0 0 99999px rgba(0, 0, 0, .5);
+}
+
+.form-popup {
+    padding: 10px;
+    background-color: white;
+}

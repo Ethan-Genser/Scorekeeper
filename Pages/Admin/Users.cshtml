@@ -1,0 +1,152 @@
+﻿@page
+@model Scorekeeper.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Admin - Users";
+}
+
+<div>
+    <div class="text-center">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+    
+    
+    <div class="admin-create-btn-container">
+        <button id="admin-create-btn" class="btn btn-outline-success">Create</button>
+    </div>
+    
+    <!-- CREATE USER FORM -->
+    <div class="form-container text-center" id="create-form">
+        <form method="post" class="form-popup">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- USERNAME -->
+            <div class="form-group">
+                <label asp-for="NewUserName" class="control-label"></label>
+                <input asp-for="NewUserName" class="form-control" />
+                <span asp-validation-for="NewUserName" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label asp-for="NewEmail" class="control-label"></label>
+                <input asp-for="NewEmail" class="form-control" />
+                <span asp-validation-for="NewEmail" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- EMAIL CONFIRMED -->
+            <div class="form-group">
+                <label asp-for="NewEmailConfirmed" class="control-label">NewEmailConfirmed:</label>
+                <input type="checkbox" asp-for="NewEmailConfirmed" />
+                <span asp-validation-for="NewEmailConfirmed"></span>
+            </div>
+            <br>
+            <!-- PASSWORD -->
+            <div class="form-group">
+                <label asp-for="NewPassword" class="control-label"></label>
+                <input asp-for="NewPassword" class="form-control" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- ROLES -->
+            <div class="form-group">
+                <label asp-for="NewRoles" class="control-label"></label>
+                <input asp-for="NewRoles" class="form-control" />
+                <span asp-validation-for="NewRoles" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- Submit/Cancel Buttons -->
+            <div class="form-group">
+                <input type="submit" value="Submit" asp-page-handler="Create" class="btn btn-primary" />
+                <input type="button" value="Cancel" class="btn btn-outline-danger" id="admin-create-cancel-btn"/>
+            </div>
+        </form>
+    </div>
+
+    <!-- USER TABLE -->
+    @if (Model.UserRoles.Count > 0)
+    {
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Scoreboards</th>
+                    <th>Email Confimed</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr class="admin-display-row">
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in Model.UserRoles[user.Id])
+                            {
+                                <p>@role</p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var scoreboard in user.Scoreboards)
+                            {
+                                <p>@scoreboard.Name</p>
+                            }
+                        </td>
+                        <td class="text-center">@(user.EmailConfirmed ? Html.Raw("&#9989;") : Html.Raw("&#10060;"))</td>
+                        <td>
+                            <button class="btn btn-outline-info admin-update-btn">Update</button>
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    //<! -- UPDATE USER FORM -->
+                    <tr class="admin-update-row" style="display:none;">
+                        <form method="post">
+                            <!-- ID -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <td>@user.Id</td>
+                            <!-- USERNAME -->
+                            <td>
+                                <input asp-for="NewUserName" value="@user.UserName" class="form-control" />
+                                <span asp-validation-for="NewUserName" class="text-danger"></span>
+                            </td>
+                            <!-- EMAIL -->
+                            <td>
+                                <input asp-for="NewEmail" value="@user.Email" class="form-control" />
+                                <span asp-validation-for="NewEmail" class="text-danger"></span>
+                            </td>
+                            <!-- ROLES -->
+                            <td>
+                                <input asp-for="NewRoles" value="@Model.UserRoles[user.Id]" class="form-control" />
+                                <span asp-validation-for="NewRoles" class="text-danger"></span>
+                            </td>
+                            <!-- EMAIL CONFIRMED -->
+                            <td class="text-center">
+                                <input type="checkbox" asp-for="NewEmailConfirmed" />
+                                <span asp-validation-for="NewEmailConfirmed"></span>
+                            </td>
+                            <td>
+                            <input type="submit" value="Submit" asp-page-handler="Update" asp-route-id="@user.Id" class="btn btn-info update-submit-btn" />
+                            </td>
+                        </form>
+                        <td>
+                            <button class=" btn btn-outline-danger update-cancel-btn">Cancel</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p><i>No Users Found</i></p>
+    }
+</div>

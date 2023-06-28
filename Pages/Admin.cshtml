@@ -1,0 +1,19 @@
+﻿@page
+@model Scorekeeper.Pages.AdminModel
+@{
+    ViewData["Title"] = "Admin Hub page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Admin Directory</h1>
+    <ul class="ul-dir">
+    @foreach (var pageDir in Directory.GetFiles("./Pages/Admin"))
+    {
+        @if (pageDir.EndsWith(".cshtml"))
+        {
+            string pageName = pageDir.Substring(pageDir.LastIndexOf('\\') + 1).Split(".")[0];
+            <li><a href = "/Admin/@pageName">@pageName</a></li>
+        }
+    }
+    </ul>
+</div>

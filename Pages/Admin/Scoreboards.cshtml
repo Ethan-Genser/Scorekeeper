@@ -1,0 +1,138 @@
+﻿@page
+@model Scorekeeper.Pages.Admin.ScoreboardsModel
+@{
+    ViewData["Title"] = "Admin - Scoreboards";
+}
+
+<div>
+    <div class="text-center">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+
+
+    <div class="admin-create-btn-container">
+        <button id="admin-create-btn" class="btn btn-outline-success">Create</button>
+    </div>
+
+    <!-- CREATE SCOREBOARD FORM -->
+    <div class="form-container text-center" id="create-form">
+        <form method="post" class="form-popup">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- NAME -->
+            <div class="form-group">
+                <label asp-for="NewName" class="control-label"></label>
+                <input asp-for="NewName" class="form-control" />
+                <span asp-validation-for="NewName" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- COLOR -->
+            <div class="form-group">
+                <label asp-for="NewColor" class="control-label"></label>
+                <input asp-for="NewColor" class="form-control" />
+                <span asp-validation-for="NewColor" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- OWNER ID -->
+            <div class="form-group">
+                <label asp-for="NewOwnerId" class="control-label"></label>
+                <input asp-for="NewOwnerId" class="form-control" />
+                <span asp-validation-for="NewOwnerId" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- USERS -->
+            <div class="form-group">
+                <label asp-for="NewUsers" class="control-label"></label>
+                <input asp-for="NewUsers" class="form-control" />
+                <span asp-validation-for="NewUsers" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- Submit/Cancel Buttons -->
+            <div class="form-group">
+                <input type="submit" value="Submit" asp-page-handler="Create" class="btn btn-primary" />
+                <input type="button" value="Cancel" class="btn btn-outline-danger" id="admin-create-cancel-btn" />
+            </div>
+        </form>
+    </div>
+
+    <!-- USER TABLE -->
+    @if (Model.Scoreboards.Count > 0)
+    {
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Owner</th>
+                    <th>Users</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var scoreboard in Model.Scoreboards)
+                {
+                    <tr class="admin-display-row">
+                        <td>@scoreboard.Id</td>
+                        <td>@scoreboard.Name</td>
+                        <td>@scoreboard.Color</td>
+                        <td>@scoreboard.OwnerId</td>
+                        <td>
+                            @foreach (var user in scoreboard.Users)
+                            {
+                                <p>@user.UserName</p>
+                            }
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-info admin-update-btn">Update</button>
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@scoreboard.Id">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    //<! -- UPDATE SCOREBOARD FORM -->
+                    <tr class="admin-update-row" style="display:none;">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <!-- ID -->
+                            <td>@scoreboard.Id</td>
+                            <!-- NAME -->
+                            <td>
+                                <input asp-for="NewName" value="@scoreboard.Name" class="form-control" />
+                                <span asp-validation-for="NewName" class="text-danger"></span>
+                            </td>
+                            <!-- COLOR -->
+                            <td>
+                                <input asp-for="NewColor" value="@scoreboard.Color" class="form-control" />
+                                <span asp-validation-for="NewColor" class="text-danger"></span>
+                            </td>
+                            <!-- OWNER -->
+                            <td>
+                                <input asp-for="NewOwnerId" value="@scoreboard.OwnerId" class="form-control" />
+                                <span asp-validation-for="NewOwnerId" class="text-danger"></span>
+                            </td>
+                            <!-- USERS -->
+                            <td>
+                                <input asp-for="NewUsers" value="" class="form-control" />
+                                <span asp-validation-for="NewUsers" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input type="submit" value="Submit" asp-page-handler="Update" asp-route-id="@scoreboard.Id" class="btn btn-info update-submit-btn" />
+                            </td>
+                        </form>
+                        <td>
+                            <button class=" btn btn-outline-danger update-cancel-btn">Cancel</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p><i>No Users Found</i></p>
+    }
+</div>
