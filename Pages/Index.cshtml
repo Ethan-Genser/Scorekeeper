@@ -5,6 +5,62 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4">Welcome!</h1>
+        <p><a asp-area="Identity" asp-page="/Account/Login">Login</a> to view your scoreboards or <a asp-area="Identity" asp-page="/Account/Register">register</a> if you are a new user.</p>
+    }
+    else
+    {
+        <h1 class="display-6">Welcome, @User.Identity?.Name!</h1>
+        <table>
+            @for (int i = 0; i < Model.Scoreboards.Count; i++)
+            {
+                var scoreboard = Model.Scoreboards[i];
+
+                // Open a new row if we're at the start of the row
+                if (i % IndexModel.SCOREBOARDS_PER_ROW == 0)
+                {
+                    @:<tr>
+                }
+
+                // Scoreboard thumbnail
+                <td>
+                    <div class="thumbnail-container">
+                        <div class="thumbnail-header text-center">
+                            <p>@scoreboard.Name</p>
+                        </div>
+                        <div class="thumbnail-body">
+                            @if (scoreboard.Teams.Count <= IndexModel.MAX_TEAMS_PER_THUMBNAIL)
+                            {
+                                <table class="thumbnail-team-table">
+                                    <tr>
+                                        @for (int j = 0; j < scoreboard.Teams.Count; j++)
+                                        {
+                                            var team = scoreboard.Teams.ToList()[j];
+                                            <td class="thumbnail-team-container text-center @(j == 0 ? Html.Raw("left-team") : Html.Raw("")) @(j == scoreboard.Teams.Count - 1 ? Html.Raw("right-team") : Html.Raw(""))" style="background-color:@team.Color;">
+                                                <h1 class="thumbnail-number">@team.Score</h1>
+                                            </td>
+                                            if (j < scoreboard.Teams.Count - 1)
+                                            { 
+                                                <td class="thumbnail-separator-container" style="background-image: linear-gradient(60deg, @team.Color 50%, #000000 50%, @scoreboard.Teams.ToList()[j+1].Color 53%);">
+                                                    <h1 class="thumbnail-separator">-</h1>
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </td>
+
+                // Close the row if we're at the end of the row or the end of the list
+                if (i % IndexModel.SCOREBOARDS_PER_ROW == IndexModel.SCOREBOARDS_PER_ROW - 1 || i == Model.Scoreboards.Count - 1)
+                {
+                    @:</tr>
+                }
+            }
+        </table>
+    }
 </div>

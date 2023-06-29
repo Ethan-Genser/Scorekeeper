@@ -38,6 +38,17 @@ namespace Scorekeeper.Services
                 .FirstOrDefault();
         }
 
+        public List<Scoreboard> GetScoreboardsByUser(string userId)
+        {
+            List<Scoreboard>? scoreboards = _context.Scoreboards
+                .Where(sb => sb.Users.Any(u => u.Id == userId))
+                .Include(sb => sb.Users)
+                .Include(sb => sb.Teams)
+                .ToList();
+
+            return scoreboards ?? new List<Scoreboard>();
+        }
+
         // UPDATE
         public void UpdateScoreboard(Scoreboard scoreboard)
         {
