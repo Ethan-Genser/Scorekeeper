@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Scorekeeper.Models;
 using Scorekeeper.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Scorekeeper.Pages
 {
@@ -34,6 +35,11 @@ namespace Scorekeeper.Pages
                     Scoreboards = _scoreboardService.GetScoreboardsByUser(userId);
                 }
             }
+        }
+
+        public IActionResult OnPostRedirectToScoreboard(string id)
+        {
+            return RedirectToPage("/scoreboard", new { id = id});
         }
     }
 }

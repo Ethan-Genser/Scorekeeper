@@ -1,4 +1,5 @@
 ﻿@page
+@using Scorekeeper.Models;
 @model Scorekeeper.Pages.Admin.TeamsModel
 @{
     ViewData["Title"] = "Admin - Teams";
@@ -75,7 +76,7 @@
                     <tr class="admin-display-row">
                         <td>@team.Id</td>
                         <td>@team.Name</td>
-                        <td>@team.Color</td>
+                        <td>@((Team.ColorName)team.Color)</td>
                         <td>@team.Score</td>
                         <td>@team.Scoreboard.Name</td>
                         <td>
@@ -101,7 +102,7 @@
                             </td>
                             <!-- COLOR -->
                             <td>
-                                <input asp-for="NewColor" value="@team.Color" class="form-control" />
+                            <input asp-for="NewColor" value="@(((Team.ColorName)team.Color).ToString())" class="form-control" />
                                 <span asp-validation-for="NewColor" class="text-danger"></span>
                             </td>
                             <!-- SCORE -->

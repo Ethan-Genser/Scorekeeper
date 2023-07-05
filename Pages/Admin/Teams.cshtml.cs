@@ -43,7 +43,14 @@ namespace Scorekeeper.Pages.Admin
             }
             if (NewColor != null)
             {
-                team.Color = NewColor;
+                try
+                {
+                    team.Color = (int)Enum.Parse<Team.ColorName>(NewColor);
+                }
+                catch (ArgumentException)
+                {
+                    return NotFound();
+                }
             }
             if (NewScore != null)
             {
@@ -88,7 +95,14 @@ namespace Scorekeeper.Pages.Admin
             }
             if (NewColor != null)
             {
-                team.Color = NewColor;
+                try
+                {
+                    team.Color = (int)Enum.Parse<Team.ColorName>(NewColor);
+                }
+                catch (ArgumentException)
+                {
+                    return NotFound();
+                }
             }
             if (NewScore != null)
             {

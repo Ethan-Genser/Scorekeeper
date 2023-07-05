@@ -1,7 +1,5 @@
 ﻿$('.admin-update-btn').on('click', function () {
     var tr = $(this).closest('.admin-display-row');
-    /*tr.hide();
-    tr.next().show();*/
     tr.css("display", "none");
     tr.next().css("display", "table-row");
 })

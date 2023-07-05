@@ -1,0 +1,13 @@
+﻿@page
+@model Scorekeeper.Pages.ScoreboardModel
+@{
+    ViewData["Title"] = "Scoreboard page";
+}
+
+<div class="text-center">
+    <h1>@Model.Scoreboard.Name</h1>
+    @foreach (var team in Model.Scoreboard.Teams)
+    {
+        <p>@team.Name: @team.Score</p>
+    }
+</div>

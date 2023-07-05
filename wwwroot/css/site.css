@@ -63,38 +63,35 @@ body {
 }
 
 .thumbnail-container {
-    border: 4px solid #000000;
-    border-radius: 10px;
-    width: 30%;
+    border: 1px solid #dddddd;
+    border-radius: 10px 10px 0 0;
+    margin: 10.5px;
+    padding: 0 11.5px 0 11.5px;
 }
 
-.thumbnail-team-table {
+.thumbnail-container:hover {
+    box-shadow: 0px 0px 99999px #dddddd inset;    
+}
+
+.thumbnail-title {
+    padding: 5px;
+}
+
+.thumbnail-score-container {
+    padding: 10px;
+}
+
+.thumbnail-more-teams-container {
+    font-size: 8pt;
+    border: 1px solid #dddddd;
+}
+
+.invisible-btn-wrapper {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
     width: 100%;
-    table-layout: fixed;
-    color: #ffffff;
-}
-
-.left-team {
-    border-radius: 0 0 0 4px;
-}
-
-.right-team {
-    border-radius: 0 0 4px 0;
-}
-
-.thumbnail-header {
-    border-bottom: 4px solid #000000;
-}
-
-.thumbnail-number {
-    font-size: 82px;
-}
-
-.thumbnail-separator {
-    font-size: 82px;
-    padding-bottom: 12px;
-}
-
-.thumbnail-team-table td {
-    vertical-align: middle;
+    height: 100%;
 }
