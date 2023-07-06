@@ -50,12 +50,12 @@ namespace Scorekeeper.Pages
 
         public IActionResult OnPostIncrementScore(string teamid, string scoreboardid)
         {
-            changeScore(teamid, 1);
+            ChangeScore(teamid, 1);
             return RedirectToAction("Get", new { ScoreboardId = scoreboardid });
         }
         public IActionResult OnPostDecrementScore(string teamid, string scoreboardid)
         {
-            changeScore(teamid, -1);
+            ChangeScore(teamid, -1);
             return RedirectToAction("Get", new { ScoreboardId = scoreboardid });
         }
         public IActionResult OnPostCreate(string scoreboardid)
@@ -92,7 +92,7 @@ namespace Scorekeeper.Pages
             return RedirectToAction("Get", new { ScoreboardId = scoreboardid });
         }
 
-        private void changeScore(string teamid, float delta)
+        private void ChangeScore(string teamid, float delta)
         {
             var team = _teamService.GetTeam(teamid);
             if (team != null)

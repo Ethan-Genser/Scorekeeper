@@ -7,9 +7,12 @@
     const int MAX_TEAMS_PER_ROW = 4;
 
     var scoreboard = Model.Scoreboard;
+
+    // TODO: MAKE SURE HAS ACCESS TO THIS SB BEFORE ALLOWING IT TO BE VIEWED
 }
 
 <div class="container-fluid text-center">
+    <!-- Title and add button -->
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6 scoreboard-title-container">
@@ -23,24 +26,25 @@
         <div class="col-2"></div>
     </div>
 
-
-
     <!-- CREATE TEAM FORM -->
     <div class="form-container text-center" id="create-form">
         <form method="post" class="form-popup">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- NAME -->
             <div class="form-group">
-                <label asp-for="NewName" class="control-label"></label>
+                <label asp-for="NewName" class="control-label">Team Name</label>
                 <input asp-for="NewName" class="form-control" />
                 <span asp-validation-for="NewName" class="text-danger"></span>
             </div>
             <br>
             <!-- COLOR -->
             <div class="form-group">
-                <label asp-for="NewColor" class="control-label"></label>
-                <input asp-for="NewColor" class="form-control" />
-                <span asp-validation-for="NewColor" class="text-danger"></span>
+                <p>Team Color</p>
+                @foreach (string color in Enum.GetNames(typeof(Team.ColorName)))
+                {
+                    <input type="radio" class="color-radio" id="@color" value="@color" asp-for="NewColor" style="--color-var:@Team.TeamColorLookup[new Team.TeamColorInfo(Enum.Parse<Team.ColorName>(color), Team.ColorMode.Light)];"/>
+                } 
+                
             </div>
             <br>
             <!-- Submit/Cancel Buttons -->
@@ -51,8 +55,7 @@
         </form>
     </div>
 
-
-
+    <!-- Team list -->
     @for (int i = 0; i < Model.Scoreboard?.Teams.Count; i++)
     {
         // Open a new row if we're at the start of the row

@@ -159,3 +159,35 @@ body {
 #add-team-btn p {
     margin: 0;
 }
+
+.color-radio {
+    visibility:hidden;
+    margin: 7px;
+}
+
+.color-radio:after {
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--color-var);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+}
+
+.color-radio:checked:after {
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--color-var);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid #0094ff;
+}
