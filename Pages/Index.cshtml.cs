@@ -10,13 +10,10 @@ namespace Scorekeeper.Pages
 {
     public class IndexModel : PageModel
     {
-        public const int SCOREBOARDS_PER_ROW = 3;
-        public const int MAX_TEAMS_PER_THUMBNAIL = 4;
-
         private readonly ILogger<IndexModel> _logger;
         private readonly ScoreboardService _scoreboardService;
-        
-        public List<Scoreboard> Scoreboards { get; set; }
+
+        public List<Scoreboard> Scoreboards { get; set; } = new List<Scoreboard>();
 
         public IndexModel(ILogger<IndexModel> logger, ScoreboardService scoreboardService)
         {
@@ -39,7 +36,7 @@ namespace Scorekeeper.Pages
 
         public IActionResult OnPostRedirectToScoreboard(string id)
         {
-            return RedirectToPage("/scoreboard", new { id = id});
+            return RedirectToPage("/scoreboard", new { ScoreboardId = id});
         }
     }
 }

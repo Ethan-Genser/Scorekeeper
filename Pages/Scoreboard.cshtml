@@ -1,13 +1,63 @@
 ﻿@page
+@using Scorekeeper.Models;
 @model Scorekeeper.Pages.ScoreboardModel
 @{
     ViewData["Title"] = "Scoreboard page";
+
+    const int MAX_TEAMS_PER_ROW = 4;
 }
 
-<div class="text-center">
-    <h1>@Model.Scoreboard.Name</h1>
-    @foreach (var team in Model.Scoreboard.Teams)
+<div class="container-fluid text-center">
+    <h1 class="display-4">@Model.Scoreboard?.Name</h1>
+    @{
+        var scoreboard = Model.Scoreboard;
+    }
+    @for (int i = 0; i < Model.Scoreboard?.Teams.Count; i++)
     {
-        <p>@team.Name: @team.Score</p>
+        // Open a new row if we're at the start of the row
+        if (i % MAX_TEAMS_PER_ROW == 0)
+        {
+            @:<div class="row justify-content-center">
+        }
+
+        var team = scoreboard.Teams.ToList()[i];
+        <div class="col-3">
+            <div class="container-fluid team-score-container">
+                <div class="row">
+                    <div class="col-12 team-name-container">
+                        @team.Name
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid team-score-container" style="background-color:@Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team.Color, Team.ColorMode.Light)]; color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"));">
+                <div class="row">
+                    <div class="col-12">
+                        @team.Score
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <form method="post" asp-page-handler="DecrementScore" asp-route-teamid="@team.Id" asp-route-scoreboardid="@scoreboard.Id">
+                        <button class="plus-minus-btn" style="color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
+                            <p>-</p>
+                        </button>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <form method="post" asp-page-handler="IncrementScore" asp-route-teamid="@team.Id" asp-route-scoreboardid="@scoreboard.Id">
+                        <button class="plus-minus-btn" style="color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
+                            <p>+</p>
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        // Close the row if we're at the end of the row or the end of the list
+        if (i % MAX_TEAMS_PER_ROW == MAX_TEAMS_PER_ROW - 1 || i == Model.Scoreboard.Teams.Count - 1)
+        {
+            @:</div>
+        }
     }
 </div>

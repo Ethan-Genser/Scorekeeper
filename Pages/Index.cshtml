@@ -3,10 +3,13 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+
+    const int SCOREBOARDS_PER_ROW = 3;
+    const int MAX_TEAMS_PER_THUMBNAIL = 4;
 }
 
 <div class="text-center">
-    @if (!User.Identity.IsAuthenticated)
+    @if (!User.Identity?.IsAuthenticated ?? false)
     {
         <h1 class="display-4">Welcome!</h1>
         <p><a asp-area="Identity" asp-page="/Account/Login">Login</a> to view your scoreboards or <a asp-area="Identity" asp-page="/Account/Register">register</a> if you are a new user.</p>
@@ -19,7 +22,7 @@
                 var scoreboard = Model.Scoreboards[i];
 
                 // Open a new row if we're at the start of the row
-                if (i % IndexModel.SCOREBOARDS_PER_ROW == 0)
+                if (i % SCOREBOARDS_PER_ROW == 0)
                 {
                     @:<div class="row">
                 }
@@ -39,18 +42,18 @@
                             <div class="row">            
                                 @for (int j = 0; j < scoreboard.Teams.Count; j++)
                                 {
-                                    @if (j < IndexModel.MAX_TEAMS_PER_THUMBNAIL - 1)
+                                    @if (j < MAX_TEAMS_PER_THUMBNAIL - 1)
                                     {
                                         var team = scoreboard.Teams.ToList()[j];
-                                        <div class="col-@((scoreboard.Teams.Count <= IndexModel.MAX_TEAMS_PER_THUMBNAIL) ? (12/scoreboard.Teams.Count) : (12/IndexModel.MAX_TEAMS_PER_THUMBNAIL)) thumbnail-score-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team.Color, Team.ColorMode.Light)]); color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"))">
+                                        <div class="col thumbnail-score-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team.Color, Team.ColorMode.Light)]); color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"))">
                                             @team.Score
                                         </div>
                                     }
                                 }
-                                @if (scoreboard.Teams.Count > IndexModel.MAX_TEAMS_PER_THUMBNAIL)
+                                @if (scoreboard.Teams.Count > MAX_TEAMS_PER_THUMBNAIL)
                                 {
-                                    <div class="col-@(12/IndexModel.MAX_TEAMS_PER_THUMBNAIL) thumbnail-score-container thumbnail-more-teams-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo(Team.ColorName.White, Team.ColorMode.Light)]);">
-                                        +@(scoreboard.Teams.Count - IndexModel.MAX_TEAMS_PER_THUMBNAIL + 1) more...
+                                    <div class="col thumbnail-score-container thumbnail-more-teams-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo(Team.ColorName.White, Team.ColorMode.Light)]);">
+                                        +@(scoreboard.Teams.Count - MAX_TEAMS_PER_THUMBNAIL + 1) more...
                                     </div>
                                 }
                             </div>
@@ -60,7 +63,7 @@
                 </div>
 
                 // Close the row if we're at the end of the row or the end of the list
-                if (i % IndexModel.SCOREBOARDS_PER_ROW == IndexModel.SCOREBOARDS_PER_ROW - 1 || i == Model.Scoreboards.Count - 1)
+                if (i % SCOREBOARDS_PER_ROW == SCOREBOARDS_PER_ROW - 1 || i == Model.Scoreboards.Count - 1)
                 {
                     @:</div>
                 }
