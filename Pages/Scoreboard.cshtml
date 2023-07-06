@@ -5,13 +5,54 @@
     ViewData["Title"] = "Scoreboard page";
 
     const int MAX_TEAMS_PER_ROW = 4;
+
+    var scoreboard = Model.Scoreboard;
 }
 
 <div class="container-fluid text-center">
-    <h1 class="display-4">@Model.Scoreboard?.Name</h1>
-    @{
-        var scoreboard = Model.Scoreboard;
-    }
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 scoreboard-title-container">
+            <h1 class="display-4 scoreboard-title">@scoreboard?.Name</h1>
+        </div>
+        <div class="col-1">
+            <button id="add-team-btn">
+                <p>+</p>
+            </button>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+
+
+    <!-- CREATE TEAM FORM -->
+    <div class="form-container text-center" id="create-form">
+        <form method="post" class="form-popup">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- NAME -->
+            <div class="form-group">
+                <label asp-for="NewName" class="control-label"></label>
+                <input asp-for="NewName" class="form-control" />
+                <span asp-validation-for="NewName" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- COLOR -->
+            <div class="form-group">
+                <label asp-for="NewColor" class="control-label"></label>
+                <input asp-for="NewColor" class="form-control" />
+                <span asp-validation-for="NewColor" class="text-danger"></span>
+            </div>
+            <br>
+            <!-- Submit/Cancel Buttons -->
+            <div class="form-group">
+                <input type="submit" value="Create" asp-page-handler="Create" asp-route-scoreboardid="@scoreboard.Id" class="btn btn-primary" />
+                <input type="button" value="Cancel" class="btn btn-outline-danger" id="add-team-cancel-btn" />
+            </div>
+        </form>
+    </div>
+
+
+
     @for (int i = 0; i < Model.Scoreboard?.Teams.Count; i++)
     {
         // Open a new row if we're at the start of the row
@@ -20,32 +61,32 @@
             @:<div class="row justify-content-center">
         }
 
-        var team = scoreboard.Teams.ToList()[i];
+        var team = scoreboard?.Teams.ToList()[i];
         <div class="col-3">
             <div class="container-fluid team-score-container">
                 <div class="row">
-                    <div class="col-12 team-name-container">
-                        @team.Name
+                    <div class="col-12 display-4 team-name-container">
+                        @team?.Name
                     </div>
                 </div>
             </div>
-            <div class="container-fluid team-score-container" style="background-color:@Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team.Color, Team.ColorMode.Light)]; color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"));">
+            <div class="container-fluid team-score-container" style="background-color:@Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team?.Color, Team.ColorMode.Light)]; color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"));">
                 <div class="row">
                     <div class="col-12">
-                        @team.Score
+                        @team?.Score
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <form method="post" asp-page-handler="DecrementScore" asp-route-teamid="@team.Id" asp-route-scoreboardid="@scoreboard.Id">
-                        <button class="plus-minus-btn" style="color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
+                        <form method="post" asp-page-handler="DecrementScore" asp-route-teamid="@team?.Id" asp-route-scoreboardid="@scoreboard?.Id">
+                        <button class="minus-btn" style="color:@(team?.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
                             <p>-</p>
                         </button>
                         </form>
                     </div>
                     <div class="col-6">
-                        <form method="post" asp-page-handler="IncrementScore" asp-route-teamid="@team.Id" asp-route-scoreboardid="@scoreboard.Id">
-                        <button class="plus-minus-btn" style="color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
+                        <form method="post" asp-page-handler="IncrementScore" asp-route-teamid="@team?.Id" asp-route-scoreboardid="@scoreboard?.Id">
+                        <button class="plus-btn" style="color:@(team?.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#969696"));">
                             <p>+</p>
                         </button>
                         </form>

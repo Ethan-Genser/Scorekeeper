@@ -17,3 +17,11 @@ $('#admin-create-btn').on('click', function () {
 $('#admin-create-cancel-btn').on('click', function () {
     $('#create-form').hide();
 })
+
+$('#add-team-btn').on('click', function () {
+    $('#create-form').show();
+})
+
+$('#add-team-cancel-btn').on('click', function () {
+    $('#create-form').hide();
+})

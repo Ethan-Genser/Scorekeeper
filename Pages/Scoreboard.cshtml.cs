@@ -17,7 +17,11 @@ namespace Scorekeeper.Pages
         [BindProperty(SupportsGet = true)]
         public string? ScoreboardId { get; set; }
         [BindProperty]
-        public float NewScore { get; set; }
+        public string? NewName { get; set; }
+        [BindProperty]
+        public string? NewColor { get; set; }
+        [BindProperty]
+        public float? NewScore { get; set; }
 
         [ActivatorUtilitiesConstructor]
         public ScoreboardModel(ScoreboardService scoreboardService, TeamService teamService)
@@ -52,6 +56,39 @@ namespace Scorekeeper.Pages
         public IActionResult OnPostDecrementScore(string teamid, string scoreboardid)
         {
             changeScore(teamid, -1);
+            return RedirectToAction("Get", new { ScoreboardId = scoreboardid });
+        }
+        public IActionResult OnPostCreate(string scoreboardid)
+        {
+            Team team = new Team();
+            if (NewName != null)
+            {
+                team.Name = NewName;
+            }
+            if (NewColor != null)
+            {
+                try
+                {
+                    team.Color = (int)Enum.Parse<Team.ColorName>(NewColor);
+                }
+                catch (ArgumentException)
+                {
+                    return NotFound();
+                }
+            }
+
+            Scoreboard? scoreboard = _scoreboardService.GetScoreboard(scoreboardid);
+            if (scoreboard != null)
+            {
+                team.Scoreboard = scoreboard;
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            _teamService.AddTeam(team);
+
             return RedirectToAction("Get", new { ScoreboardId = scoreboardid });
         }
 
