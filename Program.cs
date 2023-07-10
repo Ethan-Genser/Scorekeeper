@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scorekeeper.Data;
@@ -96,7 +97,6 @@ using (var scope = scopeFactory.CreateScope())
     var roles = roleManager.Roles.ToList();
     var users = userManager.Users.ToList();
 }
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,15 +1,20 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Scorekeeper.Models;
 using Scorekeeper.Services;
+using System.Net;
 
 namespace Scorekeeper.Pages
 {
+    [Authorize(Roles = "User")]
     public class ScoreboardModel : PageModel
     {
         private ScoreboardService _scoreboardService;
         private TeamService _teamService;
+        private ApplicationUserService _userService;
 
         public Scoreboard? Scoreboard { get; set; }
 
@@ -24,13 +29,14 @@ namespace Scorekeeper.Pages
         public float? NewScore { get; set; }
 
         [ActivatorUtilitiesConstructor]
-        public ScoreboardModel(ScoreboardService scoreboardService, TeamService teamService)
+        public ScoreboardModel(ScoreboardService scoreboardService, TeamService teamService, ApplicationUserService userService)
         {
             _scoreboardService = scoreboardService;
             _teamService = teamService;
+            _userService = userService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (ScoreboardId != null)
             {
@@ -38,14 +44,22 @@ namespace Scorekeeper.Pages
                 if (Scoreboard == null)
                 {
                     // Scoreboard not found
-                    RedirectToPage("/404");
+                    return LocalRedirect("/404");
                 }
             }
             else
             {
                 // No ID; Bad Request
-                RedirectToPage("/Error");
+                return LocalRedirect("/Error");
             }
+
+            if (!Scoreboard.Users.Contains(_userService.GetUser(User)))
+            {
+                // User not authorized to view this scoreboard
+                return LocalRedirect("/Error");
+            }
+
+            return Page();
         }
 
         public IActionResult OnPostIncrementScore(string teamid, string scoreboardid)

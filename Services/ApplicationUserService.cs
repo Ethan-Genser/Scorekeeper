@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scorekeeper.Models;
+using System.Security.Claims;
 
 namespace Scorekeeper.Services
 {
@@ -71,6 +72,15 @@ namespace Scorekeeper.Services
                 .Where(x => x.Id == id)
                 .Include(user => user.Scoreboards)
                 .FirstOrDefault();
+        }
+        public ApplicationUser? GetUser(ClaimsPrincipal claim)
+        {
+            var id = _userManager.GetUserId(claim);
+            if (id != null)
+            {
+                return GetUser(id);
+            }
+            else return null;
         }
 
         public List<string> GetAllRoles()

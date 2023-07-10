@@ -46,10 +46,11 @@ namespace Scorekeeper.Pages.Admin
             _userService = userService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             Users = _userService.GetAllUsers();
             UserRoles = _userService.GetAllUserRoles();
+            return Page();
         }
 
         // CREATE

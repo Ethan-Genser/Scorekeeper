@@ -5,9 +5,11 @@ using Scorekeeper.Models;
 using Scorekeeper.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scorekeeper.Pages
 {
+    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -21,7 +23,7 @@ namespace Scorekeeper.Pages
             _scoreboardService = scoreboardService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
@@ -32,6 +34,7 @@ namespace Scorekeeper.Pages
                     Scoreboards = _scoreboardService.GetScoreboardsByUser(userId);
                 }
             }
+            return Page();
         }
 
         public IActionResult OnPostRedirectToScoreboard(string id)

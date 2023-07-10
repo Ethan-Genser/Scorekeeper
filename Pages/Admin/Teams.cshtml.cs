@@ -29,9 +29,10 @@ namespace Scorekeeper.Pages.Admin
             _scoreboardService = scoreboardService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             Teams = _teamService.GetAllTeams();
+            return Page();
         }
 
         public IActionResult OnPostCreate()
