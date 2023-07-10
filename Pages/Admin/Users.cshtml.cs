@@ -79,7 +79,7 @@ namespace Scorekeeper.Pages.Admin
             ModelState.Remove("NewPassword");
             if (ModelState.IsValid)
             {
-                var user = _userService.GetUser(id);
+                var user = _userService.GetUserById(id);
                 if (user == null)
                 {
                     return NotFound();

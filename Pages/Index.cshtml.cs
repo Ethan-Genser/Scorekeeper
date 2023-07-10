@@ -18,6 +18,8 @@ namespace Scorekeeper.Pages
 
         [BindProperty]
         public string? NewName { get; set; }
+        [BindProperty]
+        public List<string> NewUsernames { get; set; } = new List<string>();
 
         public List<Scoreboard> Scoreboards { get; set; } = new List<Scoreboard>();
 
@@ -49,12 +51,14 @@ namespace Scorekeeper.Pages
 
         public IActionResult OnPostCreate()
         {
+            // Set the name
             Scoreboard scoreboard = new Scoreboard();
             if (NewName != null)
             {
                 scoreboard.Name = NewName;
             }
 
+            // Assign the creator as the owner
             ApplicationUser? user = _userService.GetUser(User);
             if (user != null)
             {
@@ -64,6 +68,16 @@ namespace Scorekeeper.Pages
             else
             {
                 return LocalRedirect("/Error");
+            }
+
+            // Add each of the new users to the scoreboard
+            foreach(string username in NewUsernames)
+            {
+                ApplicationUser? newuser = _userService.GetUserByUsername(username);
+                if (newuser != null)
+                {
+                    scoreboard.Users.Add(newuser);
+                }
             }
 
             _scoreboardService.AddScoreboard(scoreboard);

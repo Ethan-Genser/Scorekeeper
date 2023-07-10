@@ -26,6 +26,7 @@ namespace Scorekeeper.Services
             return _context.Scoreboards
                 .Include(sb => sb.Users)
                 .Include(sb => sb.Teams)
+                .AsSplitQuery()
                 .ToList();
         }
 
@@ -35,6 +36,7 @@ namespace Scorekeeper.Services
                 .Where(x => x.Id == id)
                 .Include(sb => sb.Users)
                 .Include(sb => sb.Teams)
+                .AsSplitQuery()
                 .FirstOrDefault();
         }
 
@@ -44,6 +46,7 @@ namespace Scorekeeper.Services
                 .Where(sb => sb.Users.Any(u => u.Id == userId))
                 .Include(sb => sb.Users)
                 .Include(sb => sb.Teams)
+                .AsSplitQuery()
                 .ToList();
 
             return scoreboards ?? new List<Scoreboard>();

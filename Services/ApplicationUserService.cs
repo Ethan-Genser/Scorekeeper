@@ -50,6 +50,7 @@ namespace Scorekeeper.Services
 
             return _userManager.Users
                 .Include(u => u.Scoreboards)
+                .AsSplitQuery()
                 .ToList();
         }
 
@@ -69,11 +70,20 @@ namespace Scorekeeper.Services
         {
             return _userManager.GetUserId(claim);
         }
-        public ApplicationUser? GetUser(string id)
+        public ApplicationUser? GetUserById(string id)
         {
               return _userManager.Users
                 .Where(x => x.Id == id)
                 .Include(user => user.Scoreboards)
+                .AsSplitQuery()
+                .FirstOrDefault();
+        }
+        public ApplicationUser? GetUserByUsername(string username)
+        {
+            return _userManager.Users
+                .Where(x => x.UserName == username)
+                .Include(user => user.Scoreboards)
+                .AsSplitQuery()
                 .FirstOrDefault();
         }
         public ApplicationUser? GetUser(ClaimsPrincipal claim)
@@ -81,7 +91,7 @@ namespace Scorekeeper.Services
             var id = GetUserId(claim);
             if (id != null)
             {
-                return GetUser(id);
+                return GetUserById(id);
             }
             else return null;
         }
@@ -126,7 +136,7 @@ namespace Scorekeeper.Services
         
         public void DeleteUser(string id)
         {
-            ApplicationUser? user = GetUser(id);
+            ApplicationUser? user = GetUserById(id);
             if (user != null)
             {
                DeleteUser(user);

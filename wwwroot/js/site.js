@@ -33,3 +33,13 @@ $('#add-scoreboard-btn').on('click', function () {
 $('#add-scoreboard-cancel-btn').on('click', function () {
     $('#create-form').hide();
 })
+
+// Scoreboard page: Add new text input when user clicks the add user button.
+var counter = 0;
+$('#add-user-btn').on('click', function () {
+    var table = document.getElementById('add-users-table');
+    var row = table.insertRow(-1);
+    var usernameCell = row.insertCell(0);
+    usernameCell.innerHTML = '<input type="text" name="NewUsernames[' + counter + ']"/><br>';
+    counter++;
+});

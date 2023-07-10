@@ -25,6 +25,7 @@ namespace Scorekeeper.Services
         {
             return _context.Teams
                 .Include(sb => sb.Scoreboard)
+                .AsSplitQuery()
                 .ToList();
         }
         public Team? GetTeam(string id)

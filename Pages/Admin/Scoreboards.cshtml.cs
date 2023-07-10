@@ -60,7 +60,7 @@ namespace Scorekeeper.Pages.Admin
             List<string> userIds = NewUsers?.Replace(" ", "").Split(",").ToList() ?? new List<string>();
             foreach (var userId in userIds)
             {
-                ApplicationUser? user = _userService.GetUser(userId);
+                ApplicationUser? user = _userService.GetUserById(userId);
                 if (user != null)
                 {
                     scoreboard.Users.Add(user);
@@ -101,7 +101,7 @@ namespace Scorekeeper.Pages.Admin
             List<string> userIds = NewUsers?.Replace(" ", "").Split(",").ToList() ?? new List<string>();
             foreach (var userId in userIds)
             {
-                ApplicationUser? user = _userService.GetUser(userId);
+                ApplicationUser? user = _userService.GetUserById(userId);
                 if (user != null)
                 {
                     scoreboard.Users.Add(user);
