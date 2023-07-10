@@ -37,9 +37,11 @@ $('#add-scoreboard-cancel-btn').on('click', function () {
 // Scoreboard page: Add new text input when user clicks the add user button.
 var counter = 0;
 $('#add-user-btn').on('click', function () {
-    var table = document.getElementById('add-users-table');
-    var row = table.insertRow(-1);
-    var usernameCell = row.insertCell(0);
-    usernameCell.innerHTML = '<input type="text" name="NewUsernames[' + counter + ']"/><br>';
+    var ul = document.getElementById('add-users-list');
+    var li = document.createElement("li");
+    ul.style.listStyle = "none";
+    ul.style.padding = 0;
+    ul.appendChild(li);
+    li.innerHTML = '<input type="text" name="NewUsernames[' + counter + ']" />';
     counter++;
 });
