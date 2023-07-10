@@ -17,9 +17,12 @@
             <h1 class="display-4 scoreboard-title">@scoreboard?.Name</h1>
         </div>
         <div class="col-1">
-            <button id="add-team-btn">
-                <p>+</p>
-            </button>
+            @if (Model.CurrentUser.Id == scoreboard.OwnerId) // Only the owner can add a new team.
+            {
+                <button id="add-team-btn">
+                    <p>+</p>
+                </button>
+            }
         </div>
         <div class="col-2"></div>
     </div>

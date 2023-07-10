@@ -17,7 +17,7 @@ namespace Scorekeeper.Pages
         private ApplicationUserService _userService;
 
         public Scoreboard? Scoreboard { get; set; }
-
+        public ApplicationUser? CurrentUser { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? ScoreboardId { get; set; }
@@ -38,6 +38,8 @@ namespace Scorekeeper.Pages
 
         public IActionResult OnGet()
         {
+            CurrentUser = _userService.GetUser(User);
+
             if (ScoreboardId != null)
             {
                 Scoreboard = _scoreboardService.GetScoreboard(ScoreboardId);
