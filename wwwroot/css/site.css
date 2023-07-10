@@ -81,6 +81,10 @@ body {
     padding: 10px;
 }
 
+.thumbnail-score-container p {
+    margin: 0;
+}
+
 .thumbnail-more-teams-container {
     font-size: 8pt;
     border: 1px solid #dddddd;
@@ -157,6 +161,24 @@ body {
 }
 
 #add-team-btn p {
+    margin: 0;
+}
+
+#add-scoreboard-btn {
+    border-radius: 5px;
+    font-size: 16pt;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #dddddd;
+    color: #dddddd;
+    padding: 1px 15px 1px 15px;
+}
+
+#add-scoreboard-btn:hover {
+    box-shadow: 0px 0px 99999px #dddddd inset;
+    color: #ffffff;
+}
+
+#add-scoreboard-btn p {
     margin: 0;
 }
 

@@ -65,7 +65,10 @@ namespace Scorekeeper.Services
 
             return userRoles;
         }
-
+        public string? GetUserId(ClaimsPrincipal claim)
+        {
+            return _userManager.GetUserId(claim);
+        }
         public ApplicationUser? GetUser(string id)
         {
               return _userManager.Users
@@ -75,7 +78,7 @@ namespace Scorekeeper.Services
         }
         public ApplicationUser? GetUser(ClaimsPrincipal claim)
         {
-            var id = _userManager.GetUserId(claim);
+            var id = GetUserId(claim);
             if (id != null)
             {
                 return GetUser(id);

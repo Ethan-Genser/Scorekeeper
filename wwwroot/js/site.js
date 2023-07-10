@@ -25,3 +25,11 @@ $('#add-team-btn').on('click', function () {
 $('#add-team-cancel-btn').on('click', function () {
     $('#create-form').hide();
 })
+
+$('#add-scoreboard-btn').on('click', function () {
+    $('#create-form').show();
+})
+
+$('#add-scoreboard-cancel-btn').on('click', function () {
+    $('#create-form').hide();
+})

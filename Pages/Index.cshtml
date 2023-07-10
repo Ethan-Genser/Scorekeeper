@@ -9,7 +9,7 @@
 }
 
 <div class="text-center">
-    @if (!User.Identity?.IsAuthenticated ?? false)
+    @if ((!User.Identity?.IsAuthenticated) ?? false)
     {
         <h1 class="display-4">Welcome!</h1>
         <p><a asp-area="Identity" asp-page="/Account/Login">Login</a> to view your scoreboards or <a asp-area="Identity" asp-page="/Account/Register">register</a> if you are a new user.</p>
@@ -17,6 +17,14 @@
     else
     {
         <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <button id="add-scoreboard-btn">
+                        <p>Create Scoreboard</p>
+                    </button>
+                </div>
+            </div>
+
             @for (int i = 0; i < Model.Scoreboards.Count; i++)
             {
                 var scoreboard = Model.Scoreboards[i];
@@ -46,7 +54,7 @@
                                     {
                                         var team = scoreboard.Teams.ToList()[j];
                                         <div class="col thumbnail-score-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team.Color, Team.ColorMode.Light)]); color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"))">
-                                            @team.Score
+                                            <p>@team.Score</p>
                                         </div>
                                     }
                                 }
@@ -54,6 +62,12 @@
                                 {
                                     <div class="col thumbnail-score-container thumbnail-more-teams-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo(Team.ColorName.White, Team.ColorMode.Light)]);">
                                         +@(scoreboard.Teams.Count - MAX_TEAMS_PER_THUMBNAIL + 1) more...
+                                    </div>
+                                }
+                                @if (scoreboard.Teams.Count < 1)
+                                {
+                                    <div class="col thumbnail-score-container" style="background-color: @(Team.TeamColorLookup[new Team.TeamColorInfo(Team.ColorName.White, Team.ColorMode.Light)]);">
+                                        <p><i>No Teams</i></p>
                                     </div>
                                 }
                             </div>
@@ -68,6 +82,25 @@
                     @:</div>
                 }
             }
+        </div>
+
+        <!-- CREATE SCOREBOARD FORM -->
+        <div class="form-container text-center" id="create-form">
+            <form method="post" class="form-popup">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- NAME -->
+                <div class="form-group">
+                    <label asp-for="NewName" class="control-label">Scoreboard Title</label>
+                    <input asp-for="NewName" class="form-control" />
+                    <span asp-validation-for="NewName" class="text-danger"></span>
+                </div>
+                <br>
+                <!-- Submit/Cancel Buttons -->
+                <div class="form-group">
+                    <input type="submit" value="Submit" asp-page-handler="Create" class="btn btn-primary" />
+                    <input type="button" value="Cancel" class="btn btn-outline-danger" id="add-scoreboard-cancel-btn" />
+                </div>
+            </form>
         </div>
     }
 </div>
