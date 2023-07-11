@@ -12,11 +12,26 @@
 <div class="container-fluid text-center">
     <!-- Title and add button -->
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 scoreboard-title-container">
-            <h1 class="display-4 scoreboard-title">@scoreboard?.Name</h1>
+        <div class="col-1"></div>
+        <div class="col-2">
+            @if (Model.CurrentUser.Id == scoreboard.OwnerId) // Only the owner can edit.
+            {
+                <button id="edit-scoreboard-btn" class="edit-hide">
+                    <img src="~/img/edit.png" alt="edit" width="20px" height="20px"/>
+                </button>
+                <button id="edit-scoreboard-cancel-btn" class="edit-show btn-outline-danger btn">
+                    <p>Cancel</p>
+                </button>
+                <button id="edit-scoreboard-save-btn" class="edit-show btn-primary btn">
+                    <p>Save</p>
+                </button>
+            }
         </div>
-        <div class="col-1">
+        <div class="col-6 scoreboard-title-container">
+            <h1 class="display-4 scoreboard-title-input edit-hide">@scoreboard?.Name</h1>
+            <input class="display-4 scoreboard-title edit-show" value="@scoreboard?.Name"/>
+        </div>
+        <div class="col-2">
             @if (Model.CurrentUser.Id == scoreboard.OwnerId) // Only the owner can add a new team.
             {
                 <button id="add-team-btn">
@@ -24,7 +39,7 @@
                 </button>
             }
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
     </div>
 
     <!-- CREATE TEAM FORM -->
@@ -45,7 +60,6 @@
                 {
                     <input type="radio" class="color-radio" id="@color" value="@color" asp-for="NewColor" style="--color-var:@Team.TeamColorLookup[new Team.TeamColorInfo(Enum.Parse<Team.ColorName>(color), Team.ColorMode.Light)];"/>
                 } 
-                
             </div>
             <br>
             <!-- Submit/Cancel Buttons -->
@@ -69,9 +83,16 @@
         <div class="col-3">
             <div class="container-fluid team-score-container">
                 <div class="row">
-                    <div class="col-12 display-4 team-name-container">
-                        @team?.Name
+                    <div class="col display-4 team-name-container edit-hide">
+                        <p>@team?.Name</p>
                     </div>
+                    <div class="col edit-show edit-scoreboard-header">
+                        <input class="display-4 edit-show edit-team-name" value="@team?.Name" style="width:80%;"/>
+                        <button class="btn btn-danger delete-team-btn">
+                            <p>X</p>
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
             <div class="container-fluid team-score-container" style="background-color:@Team.TeamColorLookup[new Team.TeamColorInfo((Team.ColorName)team?.Color, Team.ColorMode.Light)]; color:@(team.Color == (int)Team.ColorName.Black ? Html.Raw("#FFFFFF") : Html.Raw("#000000"));">

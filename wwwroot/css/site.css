@@ -21,6 +21,10 @@ body {
   margin-bottom: 60px;
 }
 
+p {
+    margin: 0;
+}
+
 .ul-dir {
     display: inline-block;
     text-align: left;
@@ -29,11 +33,11 @@ body {
 
 .admin-table td {
     padding: 10px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #cccccc;
 }
 .admin-table th {
     padding: 10px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #cccccc;
 }
 
 .admin-update-row {
@@ -51,7 +55,7 @@ body {
     position: fixed;
     top: 12.5%;
     right: 25%;
-    border: 3px solid #dddddd;
+    border: 3px solid #cccccc;
     z-index: 9;
     width: 50%;
     box-shadow: 0 0 0 99999px rgba(0, 0, 0, .5);
@@ -63,14 +67,14 @@ body {
 }
 
 .thumbnail-container {
-    border: 1px solid #dddddd;
+    border: 1px solid #cccccc;
     border-radius: 10px 10px 0 0;
     margin: 10.5px;
     padding: 0 11.5px 0 11.5px;
 }
 
 .thumbnail-container:hover {
-    box-shadow: 0px 0px 99999px #dddddd inset;    
+    box-shadow: 0px 0px 99999px #cccccc inset;    
 }
 
 .thumbnail-title {
@@ -81,13 +85,9 @@ body {
     padding: 10px;
 }
 
-.thumbnail-score-container p {
-    margin: 0;
-}
-
 .thumbnail-more-teams-container {
     font-size: 8pt;
-    border: 1px solid #dddddd;
+    border: 1px solid #cccccc;
 }
 
 .invisible-btn-wrapper {
@@ -124,24 +124,22 @@ body {
     margin: 10px 0 10px 0;
 }
 
-.plus-btn p {
-    margin: 0;
-}
-
-.minus-btn p {
-    margin: 0;
-}
-
 .team-name-container {
     font-size: 16pt;
 }
 
 .scoreboard-title-container {
-    border: 1px solid #dddddd;
+    border: 1px solid #cccccc;
     border-radius: 5px;
+    text-align: center;
 }
 
 .scoreboard-title {
+    font-size: 16pt;
+    margin 5px;
+}
+
+.scoreboard-title-input {
     font-size: 16pt;
     margin 5px;
 }
@@ -150,36 +148,28 @@ body {
     border-radius: 5px;
     font-size: 16pt;
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid #dddddd;
-    color: #dddddd;
+    border: 1px solid #cccccc;
+    color: #000000;
     padding: 1px 15px 1px 15px;
 }
 
 #add-team-btn:hover {
-    box-shadow: 0px 0px 99999px #dddddd inset;
-    color: #ffffff;
-}
-
-#add-team-btn p {
-    margin: 0;
+    box-shadow: 0px 0px 99999px #cccccc inset;
+    color: #000000;
 }
 
 #add-scoreboard-btn {
     border-radius: 5px;
     font-size: 16pt;
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid #dddddd;
-    color: #dddddd;
+    border: 1px solid #cccccc;
+    color: #cccccc;
     padding: 1px 15px 1px 15px;
 }
 
 #add-scoreboard-btn:hover {
-    box-shadow: 0px 0px 99999px #dddddd inset;
+    box-shadow: 0px 0px 99999px #cccccc inset;
     color: #ffffff;
-}
-
-#add-scoreboard-btn p {
-    margin: 0;
 }
 
 .color-radio {
@@ -212,4 +202,34 @@ body {
     display: inline-block;
     visibility: visible;
     border: 2px solid #0094ff;
+}
+
+#edit-scoreboard-btn {
+    border-radius: 5px;
+    font-size: 16pt;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #cccccc;
+    color: #cccccc;
+    padding: 1px 15px 1px 15px;
+}
+
+#edit-scoreboard-btn:hover {
+    box-shadow: 0px 0px 99999px #cccccc inset;
+    color: #ffffff;
+}
+
+.edit-show {
+    display: none;
+}
+
+.edit-hide {
+    display: default;
+}
+
+.edit-team-name {
+    font-size: 16pt;
+}
+
+.edit-scoreboard-header {
+    padding: 0;
 }
